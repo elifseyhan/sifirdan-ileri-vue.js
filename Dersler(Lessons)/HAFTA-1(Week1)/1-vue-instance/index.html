@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Instance</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <link rel="stylesheet" href="style.css">
+    <!-- Cdn linki vue2 de aşağıda çağırılmalı -->
+</head>
+
+<body>
+    <!-- Template olarak adlandırılır. -->
+    <div id="app">
+        <h1>{{ title }}</h1>
+        <p>{{ content }}</p>
+        <!-- v-bind yerine attribute başına : konularak da bind edilebilir. -->
+        <a 
+        v-bind:href="eduflow.url" 
+        :target="eduflow.target" 
+        :alt="eduflow.alt" 
+        :kablosuzkedi="owner">{{ eduflow.title }}</a>
+        <br>
+        <br>
+        <!-- v-on yerine event başına @ işareti konulabilir. -->
+        <button v-on:click="changeTitle('Bu 1. buton')">Title Değiştir...</button>
+        <button v-on:click="changeTitle('Bu 2. buton')">Title 2 Değiştir...</button>
+        <div 
+        @mousemove="updateCoords('mouseMoooove', $event)" 
+        class="box" 
+        @click="changeTitle('Box üzerinden gelen')"></div>
+        <span >{{ coords.x }} {{ coords.y }}</span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
