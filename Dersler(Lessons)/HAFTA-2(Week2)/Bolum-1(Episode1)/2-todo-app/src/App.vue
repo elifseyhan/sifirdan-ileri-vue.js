@@ -2,26 +2,25 @@
   <div class="container">
     <h3 class="text-center">Todo App</h3>
     <hr class="my-2" />
-    <label for="todoText"></label>
-    <input @keydown.enter="addnewTodo" type="text" id="todoText" placeholder="Bir şeyler yazınız...">
-    <ul>
-      <li 
-        v-for="todoItem in todoList"
-        :key="todoItem.id"
-        class="d-flex justify-content-between align-items-center">
-        <span>{{ todoItem.text }}</span>
-        <button @click="deleteItem(todoItem)" class="sm red">Sil</button>
-      </li>
-    </ul>
-    <small class="d-flex justify-content-end mt-2 green">{{ todoList.length }} Adet todo vardır.</small>
+      <AddSection @add-todo="addNewTodo" />
+      <TodoList @delete-todo-item="deleteItem" :todoList="todoList" />
+      <ResultBar :itemCount="todoList.length" />
   </div>
 </template>
 
 <script>
+import AddSection from "@/components/AddSection";
+import TodoList from "@/components/TodoList";
+import ResultBar from "@/components/ResultBar";
 export default {
-  data(){
-    return{
-      todoList: [
+  components: {
+    AddSection,
+    TodoList,
+    ResultBar
+  },
+  created(){
+    setTimeout(() => {
+      this.todoList = [
         {id: 1, text: "Bootcamp# 2"},
         {id: 2, text: "Bootcamp# 2.1"},
         {id: 3, text: "Bootcamp# 2.2"},
@@ -29,16 +28,24 @@ export default {
         {id: 5, text: "Bootcamp# 2.4"},
         {id: 6, text: "Bootcamp# 2.5"},
       ]
+    }, 2000)
+  },
+  data(){
+    return{
+      todoList: []
     }
   },
   methods: {
+    testEvent(data){
+      alert(data);
+    },
     deleteItem(todoItem){
       this.todoList = this.todoList.filter(t => t !== todoItem);
     },
-    addnewTodo(event){
+    addNewTodo(todo){
       this.todoList.push({
         id: new Date().getTime(),
-        text: event.target.value
+        text: todo
       })
       event.target.value = ''
     }
